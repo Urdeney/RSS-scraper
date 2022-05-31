@@ -57,6 +57,3 @@ class SfeduParser(Parser):
             a = SfeduArticle(link=_link, title=_title,
                              description=_description, date=_date, imageurl=_image)
             a.save()
-
-
-# p = SfeduParser('https://sfedu.ru/press-center/newspage/1')
