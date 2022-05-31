@@ -4,14 +4,14 @@ from base_parser import Parser
 
 
 class SfeduParser(Parser):
-    months = {'января': 1, 'февраля': 2, 'марта': 3, 'апреля': 4, 'мая': 5, 'июня' : 6,
-             'июля': 7, 'августа': 8, 'сентября': 9, 'октября': 10, 'ноября': 11 , 'декабря': 12 }
+    months = {'января': 1, 'февраля': 2, 'марта': 3, 'апреля': 4, 'мая': 5, 'июня': 6,
+              'июля': 7, 'августа': 8, 'сентября': 9, 'октября': 10, 'ноября': 11, 'декабря': 12}
 
     def __init__(self, url: str):
         super().__init__(url)
 
     @staticmethod
-    def __date(t: str):
+    def __date(t: str) -> datetime:
         now = datetime.today()
         if t == 'Сегодня':
             return now
@@ -23,7 +23,7 @@ class SfeduParser(Parser):
             d = d.replace(year=now.year, month=SfeduParser.months[t[1]])
             return d
 
-    def parse(self):
+    def parse(self) -> None:
         parser = bs4.BeautifulSoup(self.content, 'html.parser')
 
         i: bs4.Tag
@@ -40,6 +40,7 @@ class SfeduParser(Parser):
             print(title)
             print(date)
             print(description)
+            break
 
 
 p = SfeduParser('https://sfedu.ru/press-center/newspage/1')
