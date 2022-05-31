@@ -1,6 +1,25 @@
+from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
+from .models import SfeduArticle
 import bs4
-from base_parser import Parser
+import requests
+
+
+class Parser(ABC):
+    url: str
+    content: str
+
+    def __init__(self, url: str):
+        self.url = url
+        self.get_content()
+        self.parse()
+
+    def get_content(self):
+        self.content = requests.get(self.url).text
+
+    @abstractmethod
+    def parse(self):
+        ...
 
 
 class SfeduParser(Parser):
@@ -28,19 +47,16 @@ class SfeduParser(Parser):
 
         i: bs4.Tag
         for i in parser.find_all('div', {'class': "act"}):
-            image = i.find('img')['src']
+            _image = i.find('img')['src']
             head = i.find('div', {'class': 'acttitle'}).find('a')
-            date = self.__date(i.find('div', {'class': 'actdate'}).text)
-            link = head['href']
-            title = head.text
-            description = i.find('div', {'class': 'acttext'}).text
+            _date = self.__date(i.find('div', {'class': 'actdate'}).text)
+            _link = head['href']
+            _title = head.text
+            _description = i.find('div', {'class': 'acttext'}).text
 
-            print(image)
-            print(link)
-            print(title)
-            print(date)
-            print(description)
-            break
+            a = SfeduArticle(link=_link, title=_title,
+                             description=_description, date=_date, imageurl=_image)
+            a.save()
 
 
-p = SfeduParser('https://sfedu.ru/press-center/newspage/1')
+# p = SfeduParser('https://sfedu.ru/press-center/newspage/1')
