@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'RSS_scraper.apps.RssScraperConfig',
+    'computedfields',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
