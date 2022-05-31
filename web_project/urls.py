@@ -19,6 +19,7 @@ from django.urls import path
 from RSS_scraper import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.index, name='index')
+    path('admin', admin.site.urls),
+    path('', views.index, name='index'),
+    path('sfedu', views.sfedu, name='sfedu')
 ]
