@@ -1,0 +1,4 @@
+beautifulsoup4==4.11.1
+Django==4.0.4
+django-computedfields==0.2.0
+requests==2.27.1
